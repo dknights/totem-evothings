@@ -170,7 +170,7 @@ app.readServices = function(device)
 		app.startNotifications,
 		function(errorCode)
 		{
-			
+
 		});
 }
 
@@ -180,11 +180,11 @@ app.writeCharacteristic = function(device, characteristicUUID, value) {
 		new Uint8Array(value),
 		function()
 		{
-			
+
 		},
 		function(errorCode)
 		{
-			
+
 		});
 }
 
@@ -196,7 +196,7 @@ app.writeNotificationDescriptor = function(device, characteristicUUID)
 		new Uint8Array([1,0]),
 		function()
 		{
-			
+
 		},
 		function(errorCode)
 		{
@@ -204,7 +204,7 @@ app.writeNotificationDescriptor = function(device, characteristicUUID)
 			// listed when requesting descriptors. On iOS you are not allowed
 			// to use the configuration descriptor explicitly. It should be
 			// safe to ignore this error.
-			
+
 		});
 }
 
@@ -243,7 +243,7 @@ app.startNotifications = function(device)
 		app.handleAccelerometerValues,
 		function(errorCode)
 		{
-			
+
 		});
 
 	// Start magnetometer notification.
@@ -252,7 +252,7 @@ app.startNotifications = function(device)
 		app.handleMagnetometerValues,
 		function(errorCode)
 		{
-			
+
 		});
 
 	// Start magnetometer bearing notification.
@@ -261,7 +261,7 @@ app.startNotifications = function(device)
 		app.handleMagnetometerBearing,
 		function(errorCode)
 		{
-			
+
 		});
 
 	// Start magnetometer bearing notification.
@@ -270,7 +270,7 @@ app.startNotifications = function(device)
 		app.handleTemperatureData,
 		function(errorCode)
 		{
-			
+
 		});
 
 	// Start magnetometer bearing notification.
@@ -279,7 +279,7 @@ app.startNotifications = function(device)
 		app.handleButtonA,
 		function(errorCode)
 		{
-			
+
 		});
 
 	// Start magnetometer bearing notification.
@@ -288,7 +288,7 @@ app.startNotifications = function(device)
 		app.handleButtonB,
 		function(errorCode)
 		{
-			
+
 		});
 }
 
@@ -359,7 +359,7 @@ app.readCharacteristicUint16 = function(device, uuid, name)
 	},
 	function(errorCode)
 	{
-		
+
 	});
 }
 
@@ -375,7 +375,7 @@ app.readCharacteristic = function(device, uuid, spanID)
 	},
 	function(errorCode)
 	{
-		
+
 	});
 }
 
@@ -386,10 +386,10 @@ app.value = function(elementId, value)
 
 app.handleAccelerometerValues = function(data)
 {
-  
-  
+
+  var totemStr="<img src='res/icon'"+values.t+"</img>"
 	var values = app.parseAccelerometerValues(new Uint8Array(data));
-	app.value('Accelerometer', values.t);
+	app.value('Accelerometer', totemStr);
 }
 
 /**
@@ -415,54 +415,54 @@ app.parseAccelerometerValues = function(data)
 
 
 
-  if(rawZ > 900 && rawZ < 1100){  
+  if(rawZ > 900 && rawZ < 1100){
     if (totemPos !='1'){
       totemMoved = true;
     };
  totemPos='1';
   };
-  
-   if(rawZ < -900 && rawZ > -1100){  
-    
+
+   if(rawZ < -900 && rawZ > -1100){
+
  totemPos='2'
   };
-  
-  if(rawX > 900 && rawX < 1100){  
+
+  if(rawX > 900 && rawX < 1100){
 totemPos='3';
 
   };
-  
-   if(rawX < -900 && rawX > -1100){  
+
+   if(rawX < -900 && rawX > -1100){
 totemPos='4';
-     
+
   };
-  
-   
-  if(rawY > 900 && rawY < 1100){  
+
+
+  if(rawY > 900 && rawY < 1100){
 totemPos='5';
-    
+
   };
-  
-   if(rawY < -900 && rawY > -1100){  
+
+   if(rawY < -900 && rawY > -1100){
 totemPos='6';
-    
+
   };
-  
 
 
-  
+
+
   // log raw values every now and then
 	var now = new Date().getTime();	// current time in milliseconds since 1970.
 	if(!app.lastLog || now > app.lastLog + 3000) {
 
     app.lastLog = now;
-  
+
        createNewStatus(parseInt(totemPos)-1, new Date().getTime(), 0);
-  
-    
- 
+
+
+
 	}
-	
+
 
 	// Return result.
 	return { t:totemPos};
@@ -490,7 +490,7 @@ app.handleMagnetometerBearing = function(data)
 	// log raw values every now and then
 	var now = new Date().getTime();	// current time in milliseconds since 1970.
 	if(!app.lastLog || now > app.lastLog + 1000) {
-		
+
 		app.lastLog = now;
 	}
 
