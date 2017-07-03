@@ -26,6 +26,11 @@ body {
 	font-size: 7.5vw;
 }
 
+#Accelerometer img {
+
+width:100%;
+}
+
 /* Add a top margin to the content corresponding to the height of the header. */
 body::before,
 section::before {
