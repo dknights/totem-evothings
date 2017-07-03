@@ -453,7 +453,7 @@ totemPos='6';
 
   // log raw values every now and then
 	var now = new Date().getTime();	// current time in milliseconds since 1970.
-	if(!app.lastLog || now > app.lastLog + 3000) {
+	if(!app.lastLog || now > app.lastLog + 10000) {
 
     app.lastLog = now;
 
