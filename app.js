@@ -387,9 +387,9 @@ app.value = function(elementId, value)
 app.handleAccelerometerValues = function(data)
 {
 
-  var totemStr="<img src='res/icon'"+values.t+"</img>"
+  var totemStr='res/icon'+values.t+'.png';
 	var values = app.parseAccelerometerValues(new Uint8Array(data));
-	app.value('Accelerometer', totemStr);
+	app.value('Accelerometer', '<img src=\'+totemStr+\'</img>');
 }
 
 /**
