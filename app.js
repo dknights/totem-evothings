@@ -389,7 +389,7 @@ app.handleAccelerometerValues = function(data)
 
   var totemStr='res/icon'+values.t+'.png';
 	var values = app.parseAccelerometerValues(new Uint8Array(data));
-	app.value('Accelerometer', '<img src=\'+totemStr+\'</img>');
+	app.value('Accelerometer', '<img src="'+totemStr+'"</img>');
 }
 
 /**
