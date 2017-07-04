@@ -66,6 +66,7 @@ function createNewStatus(status, timestamp, userId) {
 app.onDeviceReady = function()
 {
 	app.showInfo('Activate the Microbit and tap Start.');
+ 
 }
 
 app.showInfo = function(info)
@@ -389,8 +390,17 @@ app.handleAccelerometerValues = function(data)
 
   
 	var values = app.parseAccelerometerValues(new Uint8Array(data));
+    
   var totemStr='res/icon'+values.t+'.png';
-	app.value('Accelerometer', "<img src='"+totemStr+"'/>");
+  var now = new Date().getTime();	// current time in milliseconds since 1970.
+	if(!app.lastLog || now > app.lastLog + 1000) {
+
+    app.lastLog = now;
+     
+     app.value('Accelerometer', "<img src='"+totemStr+"'/>");
+
+	}
+
 }
 
 /**
@@ -414,7 +424,12 @@ app.parseAccelerometerValues = function(data)
 
 
 
+ if (totemPos !== undefined){
+    var totemPos = '1';
+   var oldTotem ='1';
+  };
 
+  oldTotem = totemPos;
 
   if(rawZ > 900 && rawZ < 1100){
     
@@ -447,18 +462,23 @@ totemPos='6';
 
   };
 
+  
+  
 
 
 
   // log raw values every now and then
 	var now = new Date().getTime();	// current time in milliseconds since 1970.
-	if(!app.lastLog || now > app.lastLog + 10000) {
+	if(!app.lastLog || now > app.lastLog + 3000) {
 
     app.lastLog = now;
-
+     
+      if (oldTotem !==totemPos ){
        createNewStatus(parseInt(totemPos)-1, new Date().getTime(), 0);
+        console.log("updated");
+    oldTotem = totemPos;
 
-
+      }
 
 	}
 
