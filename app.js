@@ -151,6 +151,7 @@ app.connectToDevice = function(device)
 			app.showInfo('Status: Connected - reading Microbit services...');
 			app.readServices(device);
           window.totemPos = '1';
+          window.oldTotem = '1';
 		},
 		function(errorCode)
 		{
@@ -235,7 +236,7 @@ app.startNotifications = function(device)
 
 	// Set sensor period to 160 ms.
 	var periodDataBuffer = new ArrayBuffer(2);
-	new DataView(periodDataBuffer).setUint16(0, 160, true);
+	new DataView(periodDataBuffer).setUint16(0, 500, true);
 	//app.writeCharacteristic(device, app.microbit.ACCELEROMETER_PERIOD, periodDataBuffer);
 	//app.writeCharacteristic(device, app.microbit.MAGNETOMETER_PERIOD, periodDataBuffer);
 
@@ -428,42 +429,42 @@ app.parseAccelerometerValues = function(data)
 
 
 
-  if(rawZ > 900 && rawZ < 1100){
+  if(rawZ > 850 && rawZ < 1200){
     
 window.totemPos='1';
   };
 
-   if(rawZ < -900 && rawZ > -1100){
+   if(rawZ < -850 && rawZ > -1200){
 
 window.totemPos='2'
   };
 
-  if(rawX > 900 && rawX < 1100){
+  if(rawX > 850 && rawX < 1200){
 window.totemPos='3';
 
   };
 
-   if(rawX < -900 && rawX > -1100){
+   if(rawX < -850 && rawX > -1200){
 window.totemPos='4';
 
   };
 
 
-  if(rawY > 900 && rawY < 1100){
+  if(rawY > 850 && rawY < 1200){
 window.totemPos='5';
 
   };
 
-   if(rawY < -900 && rawY > -1100){
+   if(rawY < -850 && rawY > -1200){
 window.totemPos='6';
 
   };
   
-   if (window.oldTotem !==window.totemPos ){
-      // createNewStatus(parseInt(totemPos)-1, new Date().getTime(), 0);
-    console.log("updated");
-     window.oldTotem = window.totemPos;
-    }
+if (window.oldTotem !==window.totemPos ){
+ createNewStatus(parseInt(totemPos)-1, new Date().getTime(), 0);
+  console.log("updated");
+  window.oldTotem = window.totemPos;
+}
 
 
   // log raw values every now and then
