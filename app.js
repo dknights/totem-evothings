@@ -150,6 +150,7 @@ app.connectToDevice = function(device)
 		{
 			app.showInfo('Status: Connected - reading Microbit services...');
 			app.readServices(device);
+          window.totemPos = '1';
 		},
 		function(errorCode)
 		{
@@ -356,7 +357,7 @@ app.readCharacteristicUint16 = function(device, uuid, name)
 {
 	device.readCharacteristic(uuid, function(data)
 	{
-		console.log(name+': '+evothings.util.littleEndianToUint16(new Uint8Array(data), 0));
+		//console.log(name+': '+evothings.util.littleEndianToUint16(new Uint8Array(data), 0));
 	},
 	function(errorCode)
 	{
@@ -371,8 +372,8 @@ app.readCharacteristic = function(device, uuid, spanID)
 		var str = utf8ArrayToStr(data, function(out, c) {
 			return out+'['+c+']';
 		});
-		console.log(spanID+': '+str);
-		app.value(spanID, str);
+		//console.log(spanID+': '+str);
+		//app.value(spanID, str);
 	},
 	function(errorCode)
 	{
@@ -422,49 +423,47 @@ app.parseAccelerometerValues = function(data)
 	var ay = rawY / divisor;
 	var az = rawZ / divisor;
 
+//console.log (window.totemPos);
 
 
- if (totemPos !== undefined){
-    var totemPos = '1';
-   var oldTotem ='1';
-  };
 
-  oldTotem = totemPos;
 
   if(rawZ > 900 && rawZ < 1100){
     
- totemPos='1';
+window.totemPos='1';
   };
 
    if(rawZ < -900 && rawZ > -1100){
 
- totemPos='2'
+window.totemPos='2'
   };
 
   if(rawX > 900 && rawX < 1100){
-totemPos='3';
+window.totemPos='3';
 
   };
 
    if(rawX < -900 && rawX > -1100){
-totemPos='4';
+window.totemPos='4';
 
   };
 
 
   if(rawY > 900 && rawY < 1100){
-totemPos='5';
+window.totemPos='5';
 
   };
 
    if(rawY < -900 && rawY > -1100){
-totemPos='6';
+window.totemPos='6';
 
   };
-
   
-  
-
+   if (window.oldTotem !==window.totemPos ){
+      // createNewStatus(parseInt(totemPos)-1, new Date().getTime(), 0);
+    console.log("updated");
+     window.oldTotem = window.totemPos;
+    }
 
 
   // log raw values every now and then
@@ -472,25 +471,21 @@ totemPos='6';
 	if(!app.lastLog || now > app.lastLog + 3000) {
 
     app.lastLog = now;
+    // console.log("old totem "+window.oldTotem);
      
-      if (oldTotem !==totemPos ){
-       createNewStatus(parseInt(totemPos)-1, new Date().getTime(), 0);
-        console.log("updated");
-    oldTotem = totemPos;
-
-      }
+       
 
 	}
 
 
 	// Return result.
-	return { t:totemPos};
+	return { t:window.totemPos};
 }
 
 app.handleMagnetometerValues = function(data)
 {
 	var values = app.parseMagnetometerValues(new Uint8Array(data));
-	app.value('MagnetometerAxes', values.x+', '+values.y+', '+values.z);
+	//app.value('MagnetometerAxes', values.x+', '+values.y+', '+values.z);
 }
 
 app.parseMagnetometerValues = function(data)
@@ -514,22 +509,22 @@ app.handleMagnetometerBearing = function(data)
 	}
 
 	var value = evothings.util.littleEndianToUint16(data, 0);
-	app.value('MagnetometerBearing', value);
+	//app.value('MagnetometerBearing', value);
 }
 
 app.handleTemperatureData = function(data)
 {
-	app.value('Temperature', evothings.util.littleEndianToInt8(new Uint8Array(data), 0)+' °C');
+	//app.value('Temperature', evothings.util.littleEndianToInt8(new Uint8Array(data), 0)+' °C');
 }
 
 app.handleButtonA = function(data)
 {
-	app.value('ButtonA', evothings.util.littleEndianToInt8(new Uint8Array(data), 0));
+	//app.value('ButtonA', evothings.util.littleEndianToInt8(new Uint8Array(data), 0));
 }
 
 app.handleButtonB = function(data)
 {
-	app.value('ButtonB', evothings.util.littleEndianToInt8(new Uint8Array(data), 0));
+	//app.value('ButtonB', evothings.util.littleEndianToInt8(new Uint8Array(data), 0));
 }
 
 
