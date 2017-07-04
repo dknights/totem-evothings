@@ -387,9 +387,10 @@ app.value = function(elementId, value)
 app.handleAccelerometerValues = function(data)
 {
 
-  var totemStr='res/icon'+values.t+'.png';
+  
 	var values = app.parseAccelerometerValues(new Uint8Array(data));
-	app.value('Accelerometer', '<img src="'+totemStr+'"</img>');
+  var totemStr='res/icon'+values.t+'.png';
+	app.value('Accelerometer', "<img src='"+totemStr+"'/>");
 }
 
 /**
@@ -416,9 +417,7 @@ app.parseAccelerometerValues = function(data)
 
 
   if(rawZ > 900 && rawZ < 1100){
-    if (totemPos !='1'){
-      totemMoved = true;
-    };
+    
  totemPos='1';
   };
 
