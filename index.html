@@ -23,7 +23,7 @@
 	<script src="libs/evothings/ui/ui.js"></script>
 	<script src="libs/evothings/easyble/easyble.js"></script>
 	<script src="libs/evothings/util/util.js"></script>
-	<script src="app.js"></script>
+	<script src="ui/scripts/app.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
 <script>
@@ -52,11 +52,11 @@
 
 	<h1>Totem</h1>
 
-	<button onclick="app.onStartButton()" class="green">
+	<button id="connect-button" class="green">
 		Connect
 	</button>
 
-	<button onclick="app.onStopButton()" class="charcoal">
+	<button id="disconnect-button" class="charcoal">
 		Disconnect
 	</button>
 
