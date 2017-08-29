@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no
+		initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+
+	<title>Microbit Sensors</title>
+
+	<style>
+		@import 'ui/css/evothings-app.css';
+	</style>
+
+<script>
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+
+}
+
+var token_code = getQueryVariable("code");
+
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'https://slack.com/api/oauth.access?client_id=3360794059.221548354467&client_secret=2942f6d254a6321cbf469ee9e69a8bf3&code='+token_code);
+xhr.onload = function() {
+    if (xhr.status === 200) {
+var obj = JSON.parse(xhr.responseText);
+         console.log(obj.user.name);
+				  console.log(xhr.responseText);
+					document.getElementById('name').innerHTML = '<h2><b>Hello ' + obj.user.name+'</b></h2>';
+    }
+    else {
+        alert('Request failed.  Returned status of ' + xhr.status);
+    }
+};
+xhr.send();
+</script>
+
+</head>
+
+<body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
+
+<div id="name">
+</div>
+<h2><a href="index.html">Get started</a></h2>
+
+</body>
+
+</html>
