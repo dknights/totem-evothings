@@ -24,21 +24,6 @@
 	<script src="libs/evothings/easyble/easyble.js"></script>
 	<script src="libs/evothings/util/util.js"></script>
 	<script src="ui/scripts/app.js"></script>
-
-  <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyC5E-wgh_HJ60l7iba_xjyXnCO6_O6tERg",
-    authDomain: "totem-backend.firebaseapp.com",
-    databaseURL: "https://totem-backend.firebaseio.com",
-    projectId: "totem-backend",
-    storageBucket: "totem-backend.appspot.com",
-    messagingSenderId: "1072797071139"
-  };
-  firebase.initializeApp(config);
-</script>
-
 </head>
 
 <body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
@@ -61,16 +46,11 @@
 	</button>
 
 	<p>
-		<strong>Status:</strong> <span id="Status">Press Connect to find the nearest Totem</span>
+		<strong>Status:</strong> <span id="status">Press Connect to find the nearest Totem</span>
 	</p>
 
-	<!--p>
-		<button onclick="toggleSensors()" class="charcoal">Toggle sensors</button>
-	</p-->
-
-
 	<p>
-		<span id="Accelerometer">[Waiting for values]</span>
+		<span id="accelerometer">[Waiting for values]</span>
 	</p>
 
 <p>
