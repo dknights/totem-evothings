@@ -1,4 +1,5 @@
 import "babel-polyfill";
+import firebase from 'firebase';
 import Microbit from './microbit';
 
 export default class App {
@@ -7,6 +8,7 @@ export default class App {
     this.lastLog = null;
     this.totemPosition = 1;
     this.oldTotemPosition = 1;
+
     this.microbit = new Microbit({
       ACCELEROMETER_SERVICE: 'e95d0753-251d-470a-a062-fa1922dfa9a8',
       ACCELEROMETER_DATA: 'e95dca4b-251d-470a-a062-fa1922dfa9a8',
@@ -27,12 +29,26 @@ export default class App {
       FIRMWARE_REVISION: '00002a26-0000-1000-8000-00805f9b34fb',
       BLE_NOTIFICATION_UUID: '00002902-0000-1000-8000-00805f9b34fb'
     });
+
+    this.firebaseConfig = {
+      apiKey: 'API_KEY',
+      authDomain: 'AUTH_DOMAIN',
+      databaseURL: 'DATABASE_URL',
+      projectId: 'PROJECT_ID',
+      storageBucket: 'STORAGE_BUCKET',
+      messagingSenderId: 'MESSAGING_SENDER_ID'
+    };
   }
 
   initialize() {
     document.addEventListener('deviceready', () => {
       evothings.scriptsLoaded(this.onDeviceReady.bind(this));
     }, false);
+    this.initializeFirebase();
+  }
+
+  initializeFirebase() {
+    firebase.initializeApp(this.firebaseConfig);
   }
 
   onDeviceReady() {
@@ -148,6 +164,7 @@ export default class App {
     const rawY = evothings.util.littleEndianToInt16(data, 2);
     const rawZ = evothings.util.littleEndianToInt16(data, 4);
 
+    // TODO - check why the totemPosition is confused when dropping the microbit
     if (rawZ > 850 && rawZ < 1200) {
       this.totemPosition = 1;
     }
