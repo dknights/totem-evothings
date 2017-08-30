@@ -14,6 +14,9 @@
 	</style>
 
 <script>
+
+
+
 function getQueryVariable(variable)
 {
        var query = window.location.search.substring(1);
@@ -27,6 +30,17 @@ function getQueryVariable(variable)
 }
 
 var token_code = getQueryVariable("code");
+var temp_token ='xoxp-3360794059-3518803224-233131626928-8cdbab0f8c3359eff31d69cc2e72b186'
+console.log(token_code);
+function changeStatus()
+{
+console.log(localStorage.getItem("token_code"));
+	var url = 'https://slack.com/api/users.profile.set'
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+	xhr.send('token='+temp_token+'&profile=%7B%22status_text%22%3A%22Hello%20There%22%2C%22status_emoji%22%3A%22%3Asunglasses%3A%22%7D');
+
+}
 
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://slack.com/api/oauth.access?client_id=3360794059.221548354467&client_secret=2942f6d254a6321cbf469ee9e69a8bf3&code='+token_code);
@@ -34,8 +48,18 @@ xhr.onload = function() {
     if (xhr.status === 200) {
 var obj = JSON.parse(xhr.responseText);
          console.log(obj.user.name);
+				  console.log(obj.user.id);
+				 console.log(obj.team.id);
 				  console.log(xhr.responseText);
-					document.getElementById('name').innerHTML = '<h2><b>Hello ' + obj.user.name+'</b></h2>';
+					localStorage.setItem("username", obj.user.name );
+					localStorage.setItem("token_code", token_code );
+					localStorage.setItem("teamID", obj.team.id);
+					localStorage.setItem("userID", obj.user.id );
+
+					var username = localStorage.getItem("username");
+					var teamID = localStorage.getItem("teamID");
+					var userID = localStorage.getItem("userID");
+					document.getElementById('name').innerHTML = '<h2><b>Hello ' + username+'</b></h2>';
     }
     else {
         alert('Request failed.  Returned status of ' + xhr.status);
@@ -48,10 +72,9 @@ xhr.send();
 
 <body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
 
-<div id="name">
-</div>
+<div id="name"></div>
 <h2><a href="index.html">Get started</a></h2>
-
+<button onclick="changeStatus()">Change my status</button>
 </body>
 
 </html>
