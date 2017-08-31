@@ -28,3 +28,15 @@ npm run build
 
 Once the bundle has been built, you can then run the app through Evothings Studio.
 
+### Firebase config
+
+Please add the relevant firebase config to your .bashrc or your .zshrc.
+
+```
+export API_KEY=
+export AUTH_DOMAIN=
+export DATABASE_URL=
+export PROJECT_ID=
+export STORAGE_BUCKET=
+export MESSAGING_SENDER_ID=
+```
