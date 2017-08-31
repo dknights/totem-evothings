@@ -1,0 +1,35 @@
+{
+  "name": "microbit-sensors-totem",
+  "version": "1.0.0",
+  "license": "WTFPL",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "npm run start",
+    "start": "nodemon --exec \"npm run build \" --watch src --watch ui --watch index.html --ignore ui/scripts/app.js",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "babel-jest": "20.0.3",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-es2015": "6.24.1",
+    "fetch-mock": "5.12.1",
+    "jest": "20.0.4",
+    "jsdom": "11.1.0",
+    "mocha": "3.5.0",
+    "nodemon": "1.11.0",
+    "rollup": "0.47.4",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-replace": "^1.1.1",
+    "rollup-watch": "4.3.1",
+    "sinon": "3.1.0"
+  },
+  "jest": {
+    "verbose": true
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "firebase": "^4.3.0"
+  }
+}
