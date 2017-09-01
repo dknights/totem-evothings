@@ -32355,7 +32355,7 @@ var App = function () {
     this.lastLog = null;
     this.totemPosition = 1;
     this.oldTotemPosition = 1;
-
+    this.xhr = new XMLHttpRequest();
     this.microbit = new Microbit({
       ACCELEROMETER_SERVICE: 'e95d0753-251d-470a-a062-fa1922dfa9a8',
       ACCELEROMETER_DATA: 'e95dca4b-251d-470a-a062-fa1922dfa9a8',
@@ -32421,6 +32421,15 @@ var App = function () {
       });
     }
   }, {
+    key: 'changeStatus',
+    value: function changeStatus(message, emoji) {
+      this.temp_token = 'xoxp-3360794059-3518803224-233131626928-8cdbab0f8c3359eff31d69cc2e72b186';
+      var url = 'https://slack.com/api/users.profile.set';
+      this.xhr.open("POST", url, true);
+      this.xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+      this.xhr.send('token=xoxp-3360794059-3518803224-233838040384-4d0af36f2f27b88e0303c6b720e4199a&profile=%7B%22status_text%22%3A%22' + message + '%22%2C%22status_emoji%22%3A%22%3A' + emoji + '%3A%22%7D');
+    }
+  }, {
     key: 'onStartButton',
     value: function onStartButton() {
       this.onStopButton().startScan().showInfo('Scanning...').startConnectTimer();
@@ -32480,7 +32489,9 @@ var App = function () {
   }, {
     key: 'updateImage',
     value: function updateImage() {
-      document.getElementById('accelerometer').innerHTML = '<img src="res/icon' + this.totemPosition + '.png" />';
+
+      this.innerEmoji = "em em-" + this.emoji;
+      document.getElementById('accelerometer').innerHTML = '<br><i class="' + this.innerEmoji + '"></i><p>' + unescape(this.message) + '</p>';
     }
   }, {
     key: 'handleAccelerometerValues',
@@ -32514,30 +32525,43 @@ var App = function () {
       // TODO - check why the totemPosition is confused when dropping the microbit
       if (rawZ > 850 && rawZ < 1200) {
         this.totemPosition = 1;
+        this.message = "work%20mode%3A%20Stopped";
+        this.emoji = "raised_hand";
       }
 
       if (rawZ < -850 && rawZ > -1200) {
         this.totemPosition = 2;
+        this.message = "mode%3A%20Paused";
+        this.emoji = "zzz";
       }
 
       if (rawX > 850 && rawX < 1200) {
         this.totemPosition = 3;
+        this.message = "mode%3A%20Conceptual";
+        this.emoji = "cloud";
       }
 
       if (rawX < -850 && rawX > -1200) {
         this.totemPosition = 4;
+        this.message = "mode%3A%20Tangible";
+        this.emoji = "no_entry_sign";
       }
 
       if (rawY > 850 && rawY < 1200) {
         this.totemPosition = 5;
+        this.message = "mode%3A%20getting%20shit%20done";
+        this.emoji = "sweat_drops";
       }
 
       if (rawY < -850 && rawY > -1200) {
         this.totemPosition = 6;
+        this.message = "mode%3A%20Inspiration";
+        this.emoji = "blossom";
       }
 
       if (this.oldTotemPosition !== this.totemPosition) {
         this.createNewStatus(this.totemPosition - 1, new Date().getTime(), 0);
+        this.changeStatus(this.message, this.emoji);
         this.oldTotemPosition = this.totemPosition;
       }
 
