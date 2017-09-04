@@ -13,16 +13,6 @@ export default class App {
       ACCELEROMETER_SERVICE: 'e95d0753-251d-470a-a062-fa1922dfa9a8',
       ACCELEROMETER_DATA: 'e95dca4b-251d-470a-a062-fa1922dfa9a8',
       ACCELEROMETER_PERIOD: 'e95dfb24-251d-470a-a062-fa1922dfa9a8',
-      MAGNETOMETER_SERVICE: 'e95df2d8-251d-470a-a062-fa1922dfa9a8',
-      MAGNETOMETER_DATA: 'e95dfb11-251d-470a-a062-fa1922dfa9a8',
-      MAGNETOMETER_PERIOD: 'e95d386c-251d-470a-a062-fa1922dfa9a8',
-      MAGNETOMETER_BEARING: 'e95d9715-251d-470a-a062-fa1922dfa9a8',
-      BUTTON_SERVICE: 'e95d9882-251d-470a-a062-fa1922dfa9a8',
-      BUTTON_A: 'e95dda90-251d-470a-a062-fa1922dfa9a8',
-      BUTTON_B: 'e95dda91-251d-470a-a062-fa1922dfa9a8',
-      TEMPERATURE_SERVICE: 'e95d6100-251d-470a-a062-fa1922dfa9a8',
-      TEMPERATURE_DATA: 'e95d9250-251d-470a-a062-fa1922dfa9a8',
-      TEMPERATURE_PERIOD: 'e95d1b25-251d-470a-a062-fa1922dfa9a8',
       DEVICE_INFO_SERVICE: '0000180a-0000-1000-8000-00805f9b34fb',
       DEVICE_MODEL: '00002a24-0000-1000-8000-00805f9b34fb',
       SERIAL_NUMBER: '00002a25-0000-1000-8000-00805f9b34fb',
@@ -142,6 +132,7 @@ export default class App {
   }
 
   handleAccelerometerValues(data) {
+    // TODO - remove status update from parseAccelerometerValues function
     this.parseAccelerometerValues(new Uint8Array(data));
     const now = new Date().getTime();
 
