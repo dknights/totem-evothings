@@ -8,7 +8,6 @@ export default class App {
     this.lastLog = null;
     this.totemPosition = 1;
     this.oldTotemPosition = 1;
-    this.xhr = new XMLHttpRequest();
     this.microbit = new Microbit({
       ACCELEROMETER_SERVICE: 'e95d0753-251d-470a-a062-fa1922dfa9a8',
       ACCELEROMETER_DATA: 'e95dca4b-251d-470a-a062-fa1922dfa9a8',
@@ -32,6 +31,11 @@ export default class App {
 
   initialize() {
     document.addEventListener('deviceready', () => {
+      document.getElementById('slackbutton').style.display = "none";
+
+      if (window.localStorage.getItem("username") === null) {
+        document.getElementById('slackbutton').style.display = "block";
+      }
       evothings.scriptsLoaded(this.onDeviceReady.bind(this));
     }, false);
     this.initializeFirebase();
@@ -68,16 +72,13 @@ export default class App {
     });
   }
 
-
-
-changeStatus(message, emoji)
-  {
-    this.temp_token ='xoxp-3360794059-3518803224-233131626928-8cdbab0f8c3359eff31d69cc2e72b186';
-  	var url = 'https://slack.com/api/users.profile.set';
-  	this.xhr.open("POST", url, true);
-  	this.xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-  	this.xhr.send('token=xoxp-3360794059-3518803224-233838040384-4d0af36f2f27b88e0303c6b720e4199a&profile=%7B%22status_text%22%3A%22'+message+'%22%2C%22status_emoji%22%3A%22%3A'+emoji+'%3A%22%7D');
-
+  changeStatus(message, emoji) {
+    const url = 'https://slack.com/api/users.profile.set';
+    const temp_token = 'xoxp-3360794059-3518803224-233131626928-8cdbab0f8c3359eff31d69cc2e72b186';
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    xhr.send(`token=xoxp-3360794059-3518803224-233838040384-4d0af36f2f27b88e0303c6b720e4199a&profile=%7B%22status_text%22%3A%22${message}%22%2C%22status_emoji%22%3A%22%3A${emoji}%3A%22%7D`);
   }
 
   onStartButton() {
@@ -140,9 +141,7 @@ changeStatus(message, emoji)
   }
 
   updateImage() {
-
-    this.innerEmoji="em em-"+this.emoji;
-    document.getElementById('accelerometer').innerHTML = `<br><i class="${this.innerEmoji}"></i><p>`+unescape(this.message)+`</p>`;
+    document.getElementById('accelerometer').innerHTML = `<br><i class="em em-${this.emoji}"></i><p>${this.message}</p>`;
   }
 
   handleAccelerometerValues(data) {
@@ -184,8 +183,8 @@ changeStatus(message, emoji)
 
     if (rawX > 850 && rawX < 1200) {
       this.totemPosition = 3;
-        this.message = "mode%3A%20Conceptual";
-        this.emoji = "cloud";
+      this.message = "mode%3A%20Conceptual";
+      this.emoji = "cloud";
     }
 
     if (rawX < -850 && rawX > -1200) {

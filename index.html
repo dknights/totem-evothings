@@ -3,66 +3,57 @@
 
 <head>
 
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, user-scalable=no
-		initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, user-scalable=no
+		initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
 
-	<title>Microbit Sensors</title>
+  <title>Microbit Sensors</title>
 
-	<style>
-		@import 'ui/css/evothings-app.css';
-	</style>
+  <style>
+    @import 'ui/css/evothings-app.css';
+    @import 'ui/css/emoji.css';
+  </style>
 
-	<script>
-	// Redirect console.log to Evothings Workbench.
-	if (window.hyper && window.hyper.log) { console.log = hyper.log }
-	</script>
-	<link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-	<script src="cordova.js"></script>
-	<script src="libs/evothings/evothings.js"></script>
-	<script src="libs/evothings/ui/ui.js"></script>
-	<script src="libs/evothings/easyble/easyble.js"></script>
-	<script src="libs/evothings/util/util.js"></script>
-	<script src="ui/scripts/app.js"></script>
-
-
+  <script>
+    // Redirect console.log to Evothings Workbench.
+    if (window.hyper && window.hyper.log) {
+      console.log = hyper.log
+    }
+  </script>
+  <script src="cordova.js"></script>
+  <script src="libs/evothings/evothings.js"></script>
+  <script src="libs/evothings/ui/ui.js"></script>
+  <script src="libs/evothings/easyble/easyble.js"></script>
+  <script src="libs/evothings/util/util.js"></script>
+  <script src="ui/scripts/app.js"></script>
 </head>
 
 <body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
 
-	<div class="totem-content">
-<img id="logo" src="ui/images/box.png">
-	<h1>Totem</h1>
+<div class="totem-content">
 
+  <img id="logo" src="ui/images/box.png">
 
-	<button id="connect-button" class="green">
-		Connect
-	</button>
+  <h1>Totem</h1>
+  <button id="connect-button" class="green">
+    Connect
+  </button>
+  <p>
+    <strong>Status:</strong> <span id="status">Press the Connect button to start</span>
+  </p>
+  <p>
+    <span id="accelerometer">[Waiting]</span>
+  </p>
 
+  <div id="slackbutton">
+    <h4>Before starting please sign into your slack account test.</h4>
+    <a href="https://slack.com/oauth/authorize?scope=identity.basic&client_id=3360794059.221548354467"><img
+        alt="Sign in with Slack" height="40" width="172"
+        src="https://platform.slack-edge.com/img/sign_in_with_slack@2x.png"/></a>
+  </div>
 
-	<p>
-		<strong>Status:</strong> <span id="status">Press the Connect button to start</span>
-	</p>
-
-	<p>
-		<span id="accelerometer">[Waiting]</span>
-	</p>
-
-<div id="slackbutton">
-	<h4>Before starting please sign into your slack account test.</h4>
-<a href="https://slack.com/oauth/authorize?scope=identity.basic&client_id=3360794059.221548354467"><img alt="Sign in with Slack" height="40" width="172" src="https://platform.slack-edge.com/img/sign_in_with_slack@2x.png" /></a>
 </div>
 
-</div>
-
-<script>
-
-document.getElementById("slackbutton").style.display = "none";
-
-if (localStorage.getItem("username") === null) {
-document.getElementById("slackbutton").style.display = "block";
-}
-</script>
 </body>
 
 </html>
